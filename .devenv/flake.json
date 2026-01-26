@@ -1,0 +1,1 @@
+{"mk-shell-bin":{"url":"github:rrbutani/nix-mk-shell-bin"},"nix-ros-overlay":{"url":"github:lopsided98/nix-ros-overlay/master"},"nix2container":{"url":"github:nlewo/nix2container","inputs":{"nixpkgs":{"follows":"nixpkgs"}}},"nixgl":{"url":"github:nix-community/nixGL/main"},"nixpkgs":{"follows":"nix-ros-overlay/nixpkgs"}}

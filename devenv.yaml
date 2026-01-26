@@ -1,0 +1,26 @@
+inputs:
+  # Utility for devenv scripts
+  mk-shell-bin:
+    url: github:rrbutani/nix-mk-shell-bin
+  # The star of the show: provides ROS packages
+  nix-ros-overlay:
+    url: github:lopsided98/nix-ros-overlay/master # Or 'develop' for bleeding edge
+  # For potential container builds (optional for dev)
+  nix2container:
+    url: github:nlewo/nix2container
+    inputs:
+      nixpkgs:
+        follows: nixpkgs # Ensures nix2container uses the same nixpkgs
+  # Essential for running GUI apps like RViz/Gazebo outside NixOS
+  nixgl:
+    url: github:nix-community/nixGL/main
+  # The base Nix package set - CRUCIAL: Must follow nix-ros-overlay's version!
+  nixpkgs:
+    follows: nix-ros-overlay/nixpkgs
+# Allow non-free packages if needed (e.g., some drivers, CUDA)
+allowUnfree: true
+# nixpkgs configuration for CUDA support
+nixpkgs:
+  config:
+    cudaSupport: true
+    cudaCapabilities: ["7.5", "8.6", "8.9"]

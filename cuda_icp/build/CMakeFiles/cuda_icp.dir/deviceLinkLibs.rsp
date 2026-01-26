@@ -1,0 +1,1 @@
+  -L"/nix/store/7m58v84ylkwxshsscj4v45am2hn80g36-cuda_nvcc-12.8.93/lib64/stubs"  -L"/nix/store/7m58v84ylkwxshsscj4v45am2hn80g36-cuda_nvcc-12.8.93/lib64-L/nix/store/7m58v84ylkwxshsscj4v45am2hn80g36-cuda_nvcc-12.8.93/nvvm/lib"   -ldl -llz4 -lcudadevrt -lcudart_static -lrt -lpthread 

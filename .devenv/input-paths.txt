@@ -1,0 +1,11 @@
+/.devenv/flake.json
+/home/fsarfraz/.config/nixpkgs/config.nix
+/home/fsarfraz/.config/nixpkgs/overlays
+/home/fsarfraz/.config/nixpkgs/overlays.nix
+/home/fsarfraz/workspaces/robo_ws/.devenv/flake.json
+/home/fsarfraz/workspaces/robo_ws/.devenv.flake.nix
+/home/fsarfraz/workspaces/robo_ws/.env
+/home/fsarfraz/workspaces/robo_ws/devenv.local.nix
+/home/fsarfraz/workspaces/robo_ws/devenv.lock
+/home/fsarfraz/workspaces/robo_ws/devenv.nix
+/home/fsarfraz/workspaces/robo_ws/devenv.yaml
