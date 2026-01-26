@@ -378,7 +378,7 @@ in
   # nixGL setup - wraps OpenGL/Vulkan apps to use system NVIDIA drivers
   export NIXGL_PREFIX="${nixGL.auto.nixGLDefault}/bin/nixGL"
 
-  # CUDA library paths
+  # CUDA library paths (nixGL handles OpenGL/Vulkan driver libs automatically)
   export LD_LIBRARY_PATH="${pkgs.cudaPackages.cudatoolkit}/lib:$LD_LIBRARY_PATH"
   export EXTRA_LDFLAGS="-L${pkgs.cudaPackages.cudatoolkit}/lib"
   export EXTRA_CCFLAGS="-I${pkgs.cudaPackages.cudatoolkit}/include"
