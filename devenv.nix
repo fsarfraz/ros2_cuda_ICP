@@ -63,9 +63,9 @@ let
 
 in
 {
-  name = "ros-mola-workspace";
+  name = "ros-workspace";
 
-  cachix.pull = [ "ros" ];
+  cachix.pull = [ "ros" "cuda-maintainers" ];
 
   overlays = [
     nix-ros-overlay.overlays.default
@@ -84,6 +84,14 @@ in
       python3Packages.pyyaml
       python3Packages.pyzmq
       python3Packages.transforms3d
+      python3Packages.ruamel-yaml
+      python3Packages.scipy
+      python3Packages.shapely
+      python3Packages.simple-parsing
+      python3Packages.pip
+      python3Packages.virtualenv
+      # cupy and torch - use pip in venv for prebuilt CUDA wheels (faster)
+
 
       # Build tools
       git
@@ -152,6 +160,9 @@ in
       pcl
 
       # Geometry and mapping
+      cgal
+      gmp
+      mpfr
       geographiclib
       orocos-kdl
       octomap
@@ -190,6 +201,7 @@ in
           # Core ROS
           ros-core
           ros-environment
+          ros-gz
 
           # Build system
           ament-cmake
@@ -266,6 +278,7 @@ in
           diff-drive-controller
           joint-state-broadcaster
           joint-state-publisher
+          joint-state-publisher-gui
 
           # Visualization
           rviz2
@@ -280,6 +293,7 @@ in
           launch-ros
           launch-testing
           launch-testing-ament-cmake
+          launch-testing-ros
 
           # Utilities
           backward-ros
@@ -315,6 +329,27 @@ in
           orocos-kdl-vendor
           nav2-common
           nav2-msgs
+          nav2-costmap-2d
+
+          # Camera/Image packages
+          camera-calibration-parsers
+          camera-info-manager
+
+          # Filters
+          filters
+
+          # Navigation
+          slam-toolbox
+          teleop-twist-keyboard
+
+          # Octomap
+          octomap-msgs
+          octomap-rviz-plugins
+
+          # Rosbag extensions
+          rosbag2-py
+          rosbag2-storage-default-plugins
+
         ];
       })
     ]);
@@ -322,7 +357,8 @@ in
   scripts.zenoh = {
     exec = ''
       echo "Launching Zenoh bridge"
-      source install/setup.bash && zenoh_bridge_ros2dds -c zenoh-bridge-config.json
+      source install/setup.bash && zenoh_bridge_ros2dds 
+      #-c zenoh-bridge-config.json
     '';
   };
 
@@ -347,6 +383,17 @@ in
     '';
   };
 
+  scripts.install-cuda-python = {
+    exec = ''
+      echo "Installing CUDA Python packages in venv..."
+      # Use workspace dir for temp to avoid /tmp space issues
+      mkdir -p .pip-tmp
+      TMPDIR="$(pwd)/.pip-tmp" pip install --no-cache-dir cupy-cuda12x torch --extra-index-url https://download.pytorch.org/whl/cu121
+      rm -rf .pip-tmp
+      echo "Done! cupy and torch with CUDA installed."
+    '';
+  };
+
   # containers.zenoh = {
   #   name = "zenoh";
   #   startupCommand = config.scripts.zenoh.exec;
@@ -355,6 +402,15 @@ in
  enterShell = ''
   # Create CARGO_HOME directory if it doesn't exist
   mkdir -p ${config.env.DEVENV_ROOT}/.cargo
+
+  # Python venv for pip packages (cupy, torch with CUDA)
+  VENV_DIR="${config.env.DEVENV_ROOT}/.venv"
+  if [ ! -d "$VENV_DIR" ]; then
+    echo "Creating Python venv at $VENV_DIR..."
+    python -m venv "$VENV_DIR" --system-site-packages
+  fi
+  source "$VENV_DIR/bin/activate"
+  export PYTHONPATH="$VENV_DIR/lib/python3.12/site-packages:$PYTHONPATH"
 
   # X11 Display for GUI applications
   export DISPLAY=''${DISPLAY:-:0}

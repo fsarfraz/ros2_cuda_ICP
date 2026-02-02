@@ -1,0 +1,60 @@
+# ROS2 build artifacts
+build/
+install/
+log/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+*.egg-info/
+.eggs/
+
+# Rust/Cargo
+.cargo/
+target/
+
+# Nix/devenv
+.devenv/
+.devenv.flake.nix
+.direnv/
+result
+result-*
+
+# IDE/Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-workspace
+*.sublime-project
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# CUDA/CuPy cache
+.cupy/
+.nv/
+
+# Misc
+*.log
+.cache/
+*.bak
+*.tmp
+
+# Compiled files
+*.o
+*.a
+*.out
+
+# Core dumps
+core
+core.*

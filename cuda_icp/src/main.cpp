@@ -141,7 +141,10 @@ int main(int argc, char** argv) {
     std::cout << "Running ICP algorithm...\n";
     std::cout << "========================================\n\n";
 
+    auto start_time = std::chrono::high_resolution_clock::now();
     auto result = computeICP(source, target, config);
+    auto end_time = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration<double>(end_time - start_time);
 
     // Print results
     std::cout << "\n========================================\n";
@@ -149,7 +152,8 @@ int main(int argc, char** argv) {
     std::cout << "========================================\n";
     std::cout << "Converged: " << (result.converged ? "Yes" : "No") << "\n";
     std::cout << "Iterations: " << result.iterations << "\n";
-    std::cout << "Final RMSE: " << result.final_error << "\n\n";
+    std::cout << "Final RMSE: " << result.final_error << "\n";
+    std::cout << "Time elapsed: " << duration.count() << " s\n\n";
 
     std::cout << "Transformation Matrix:\n";
     std::cout << result.transformation << "\n\n";

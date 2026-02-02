@@ -1,0 +1,8 @@
+[submodule "src/elevation_mapping_cupy"]
+	path = src/elevation_mapping_cupy
+	url = https://github.com/leggedrobotics/elevation_mapping_cupy.git
+	branch = ros2
+[submodule "src/grid_map"]
+	path = src/grid_map
+	url = https://github.com/ANYbotics/grid_map.git
+	branch = jazzy
